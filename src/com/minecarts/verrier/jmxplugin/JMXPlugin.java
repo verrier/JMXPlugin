@@ -3,9 +3,7 @@ package com.minecarts.verrier.jmxplugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
 import javax.management.remote.*;
-import javax.security.auth.login.Configuration;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
@@ -29,8 +27,10 @@ public class JMXPlugin extends JavaPlugin {
             Integer port = config.getInt("port",8888);
             String hostname = config.getString("hostname",InetAddress.getLocalHost().getHostName());
 
-            if(LocateRegistry.getRegistry() == null){ //Only create a single registry per VM
+            try{
                 LocateRegistry.createRegistry(port); //http://lists.xcf.berkeley.edu/lists/advanced-java/2000-July/030432.html
+            } catch (Exception e){
+                //You can only create the registry once per VM
             }
 
             MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
