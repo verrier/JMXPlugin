@@ -1,5 +1,6 @@
 package com.minecarts.verrier.jmxplugin;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.management.MBeanServer;
@@ -22,7 +23,7 @@ public class JMXPlugin extends JavaPlugin {
     public void onEnable(){
         //Create JMX server
         try{
-            org.bukkit.util.config.Configuration config = getConfiguration();
+            FileConfiguration config = getConfig();
 
             Integer port = config.getInt("port",8888);
             String hostname = config.getString("hostname",InetAddress.getLocalHost().getHostName());
